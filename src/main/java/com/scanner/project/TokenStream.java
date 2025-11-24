@@ -62,8 +62,21 @@ public class TokenStream {
 					nextChar = readChar();
 				}
 				skipWhiteSpace();
+			} else if (nextChar == '*'){
+				nextChar = readChar();
+				while (!isEof){
+					if (nextChar == '*') {
+						nextChar = readChar();
+						if (nextChar == '/') {
+							nextChar = readChar();
+							break;
+						}
+					} else {
+						nextChar = readChar();
+					}
+				}
 				// look for <cr>, <lf>, <ff>
-
+				skipWhiteSpace();
 			} else {
 				// A slash followed by anything else must be an operator.
 				t.setValue("/");
