@@ -58,6 +58,23 @@ public class TokenStream {
 			if (nextChar == '/') { // If / is followed by another /
 				// skip rest of line - it's a comment.
 				// TODO TO BE COMPLETED
+				while (!isEndOfLine(nextChar) && !isEof){
+					nextChar = readChar();
+				}
+				skipWhiteSpace();
+			} else if (nextChar == '*'){
+				nextChar = readChar();
+				while (!isEof){
+					if (nextChar == '*') {
+						nextChar = readChar();
+						if (nextChar == '/') {
+							nextChar = readChar();
+							break;
+						}
+					} else {
+						nextChar = readChar();
+					}
+				}
 				// look for <cr>, <lf>, <ff>
 				while (!isEndOfLine(nextChar) && !isEof){
 					nextChar = readChar();
@@ -191,7 +208,7 @@ public class TokenStream {
 			// now see if this is a keyword
 			if (isKeyword(t.getValue())) {
 				t.setType("Keyword");
-			} else if (t.getValue().equals("true") || t.getValue().equals("false")) {
+			} else if (t.getValue().equals("True") || t.getValue().equals("False")) {
 				t.setType("Literal");
 			}
 			if (isEndOfToken(nextChar)) { // If token is valid, returns.
