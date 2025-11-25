@@ -57,6 +57,7 @@ public class ScannerTest {
         assertEquals("Keyword", tks.nextToken().getType());
     }
 
+    @Test
     public void leftParenthesisIsSeparator() {
         TokenStream tks = setup(6);
         assertEquals("Separator", tks.nextToken().getType());
